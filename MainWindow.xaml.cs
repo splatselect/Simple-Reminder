@@ -43,11 +43,23 @@ namespace ReminderApp
         {
             var hotkeyString = _settings.GetHotkeyDisplayString();
 
-            // Load custom icon if it exists, otherwise use default
+            // Load custom icon from embedded resource
             System.Drawing.Icon trayIcon;
             try
             {
-                trayIcon = new System.Drawing.Icon("icon.ico");
+                var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                var resourceName = "ReminderApp.icon.ico";
+                using (var stream = assembly.GetManifestResourceStream(resourceName))
+                {
+                    if (stream != null)
+                    {
+                        trayIcon = new System.Drawing.Icon(stream);
+                    }
+                    else
+                    {
+                        trayIcon = SystemIcons.Information;
+                    }
+                }
             }
             catch
             {
