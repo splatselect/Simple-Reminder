@@ -2,6 +2,32 @@
 
 A lightweight Windows reminder application built with C# and WPF.
 
+## Screenshots
+
+<p align="center">
+  <img src="screenshots/Quick reminder.png" alt="Quick Reminder" width="400"/>
+  <br/>
+  <em>Quick Reminder Window</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/Active reminders.png" alt="Active Reminders" width="600"/>
+  <br/>
+  <em>Active Reminders Management</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/Reminder Screen.png" alt="Reminder Screen" width="600"/>
+  <br/>
+  <em>Full-Screen Reminder Alert</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/Settings.png" alt="Settings" width="400"/>
+  <br/>
+  <em>Hotkey Settings</em>
+</p>
+
 ## Features
 
 - **Customizable Global Hotkey**: Default `Win+Shift+L` - press anywhere to create a reminder
@@ -47,11 +73,15 @@ A lightweight Windows reminder application built with C# and WPF.
 
 3. **Create a reminder**:
    - Press `Win+Shift+L` (or your custom hotkey), OR
-   - Right-click the system tray icon and select "New Reminder"
+   - Right-click the system tray icon and select "New Reminder", OR
+   - Click "New" from the Active Reminders window
 
 4. **Set your reminder**:
-   - Type your reminder message
-   - Use the slider to choose time (1-120 minutes)
+   - Use the slider to choose time (starts at 1-120 minutes)
+   - Drag to the maximum and release to extend by 5 more hours
+   - Keep extending to set reminders for tomorrow or beyond
+   - Type your reminder message (or set time first, then type)
+   - Press Enter or click "Start Timer"
    - A toast notification will confirm your reminder is set
 
 5. **When a reminder appears**:
