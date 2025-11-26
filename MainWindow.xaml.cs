@@ -52,6 +52,7 @@ namespace ReminderApp
 
             var contextMenu = new ContextMenuStrip();
             contextMenu.Items.Add($"New Reminder ({hotkeyString})", null, (s, e) => ShowQuickNoteWindow());
+            contextMenu.Items.Add("View Active Reminders", null, (s, e) => ShowActiveRemindersWindow());
             contextMenu.Items.Add("-");
             contextMenu.Items.Add("Settings...", null, (s, e) => ShowSettingsWindow());
             contextMenu.Items.Add("-");
@@ -117,6 +118,13 @@ namespace ReminderApp
             var quickNoteWindow = new QuickNoteWindow(_reminderService);
             quickNoteWindow.Show();
             quickNoteWindow.Activate();
+        }
+
+        private void ShowActiveRemindersWindow()
+        {
+            var activeRemindersWindow = new ActiveRemindersWindow(_reminderService);
+            activeRemindersWindow.Show();
+            activeRemindersWindow.Activate();
         }
 
         private void ShowSettingsWindow()
