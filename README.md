@@ -5,25 +5,25 @@ A lightweight Windows reminder application built with C# and WPF.
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/Quick reminder.png" alt="Quick Reminder" width="400"/>
+  <img src="Screenshots/Quick reminder.png" alt="Quick Reminder" width="400"/>
   <br/>
   <em>Quick Reminder Window</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/Active reminders.png" alt="Active Reminders" width="600"/>
+  <img src="Screenshots/Active reminders.png" alt="Active Reminders" width="600"/>
   <br/>
   <em>Active Reminders Management</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/Reminder Screen.png" alt="Reminder Screen" width="600"/>
+  <img src="Screenshots/Reminder Screen.png" alt="Reminder Screen" width="600"/>
   <br/>
   <em>Full-Screen Reminder Alert</em>
 </p>
 
 <p align="center">
-  <img src="screenshots/Settings.png" alt="Settings" width="400"/>
+  <img src="Screenshots/Settings.png" alt="Settings" width="400"/>
   <br/>
   <em>Hotkey Settings</em>
 </p>
