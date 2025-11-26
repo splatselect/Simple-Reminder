@@ -82,7 +82,7 @@ namespace ReminderApp
             contextMenu.Items.Add("Exit", null, (s, e) => System.Windows.Application.Current.Shutdown());
 
             _notifyIcon.ContextMenuStrip = contextMenu;
-            _notifyIcon.DoubleClick += (s, e) => ShowQuickNoteWindow();
+            _notifyIcon.DoubleClick += (s, e) => ShowActiveRemindersWindow();
         }
 
         private void MainWindow_SourceInitialized(object? sender, EventArgs e)

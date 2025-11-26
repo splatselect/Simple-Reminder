@@ -91,6 +91,13 @@ namespace ReminderApp
             LoadReminders();
         }
 
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            var settings = AppSettings.Load();
+            var settingsWindow = new SettingsWindow(settings);
+            settingsWindow.ShowDialog();
+        }
+
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();

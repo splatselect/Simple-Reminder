@@ -38,30 +38,36 @@ A lightweight Windows reminder application built with C# and WPF.
 
 1. **Launch the app**: It will minimize to the system tray (look for the custom icon in the bottom-right corner)
 
-2. **Create a reminder**:
-   - Press `Win+Shift+L` (or your custom hotkey), OR
+2. **View active reminders**:
    - Double-click the system tray icon, OR
+   - Right-click the system tray icon and select "View Active Reminders"
+   - See all pending reminders with their due times
+   - Click "Settings" to customize your hotkey
+   - Click "Refresh" to update the list
+
+3. **Create a reminder**:
+   - Press `Win+Shift+L` (or your custom hotkey), OR
    - Right-click the system tray icon and select "New Reminder"
 
-3. **Set your reminder**:
+4. **Set your reminder**:
    - Type your reminder message
    - Use the slider to choose time (1-120 minutes)
    - A toast notification will confirm your reminder is set
 
-4. **When a reminder appears**:
+5. **When a reminder appears**:
    - It will take over your entire screen
    - Click "Snooze" to reschedule (1-60 minutes), OR
    - Click "Dismiss" or press `ESC` to close it
 
-5. **Manage active reminders**:
-   - Right-click the system tray icon and select "View Active Reminders"
-   - See all pending reminders with due times
-   - Extend or dismiss any reminder
+6. **Manage existing reminders** (from Active Reminders window):
+   - Click "Extend" to reschedule any reminder (1-60 minutes)
+   - Click "Dismiss" to remove a reminder
 
-6. **Customize hotkey**:
+7. **Customize hotkey**:
+   - Open Active Reminders and click "Settings", OR
    - Right-click the system tray icon and select "Settings"
    - Choose modifier keys (Win, Ctrl, Alt, Shift) and a letter
-   - Test the hotkey before saving to ensure it's not in use
+   - Click "Test Hotkey" to ensure it's not in use before saving
 
 ## Requirements
 
