@@ -1,0 +1,33 @@
+<Window x:Class="ReminderApp.ToastNotification"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title=""
+        Height="120"
+        Width="350"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize">
+    <Border Background="#2ECC71"
+            CornerRadius="10"
+            BorderThickness="0"
+            Padding="20">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" Opacity="0.3" BlurRadius="15" ShadowDepth="3"/>
+        </Border.Effect>
+        <StackPanel>
+            <TextBlock x:Name="TitleTextBlock"
+                      FontSize="16"
+                      FontWeight="Bold"
+                      Foreground="White"
+                      TextWrapping="Wrap"
+                      Margin="0,0,0,5"/>
+            <TextBlock x:Name="MessageTextBlock"
+                      FontSize="13"
+                      Foreground="White"
+                      TextWrapping="Wrap"/>
+        </StackPanel>
+    </Border>
+</Window>
