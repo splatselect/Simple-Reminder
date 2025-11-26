@@ -91,6 +91,13 @@ namespace ReminderApp
             LoadReminders();
         }
 
+        private void New_Click(object sender, RoutedEventArgs e)
+        {
+            var quickNoteWindow = new QuickNoteWindow(_reminderService);
+            quickNoteWindow.ShowDialog();
+            LoadReminders(); // Refresh the list after creating a new reminder
+        }
+
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
             var settings = AppSettings.Load();

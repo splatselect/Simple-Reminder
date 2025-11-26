@@ -8,12 +8,14 @@ namespace ReminderApp
     {
         private readonly string _message;
         private readonly ReminderService _reminderService;
+        private readonly Guid _reminderId;
 
-        public ReminderWindow(string message, ReminderService reminderService)
+        public ReminderWindow(string message, ReminderService reminderService, Guid reminderId)
         {
             InitializeComponent();
             _message = message;
             _reminderService = reminderService;
+            _reminderId = reminderId;
             MessageTextBlock.Text = message;
 
             // Allow ESC key to close
@@ -21,6 +23,7 @@ namespace ReminderApp
             {
                 if (e.Key == System.Windows.Input.Key.Escape)
                 {
+                    _reminderService.RemoveReminder(_reminderId);
                     Close();
                 }
             };
@@ -36,6 +39,8 @@ namespace ReminderApp
 
             if (snoozeWindow.WasSnoozed)
             {
+                // Remove the old reminder and add a new one
+                _reminderService.RemoveReminder(_reminderId);
                 var dueTime = DateTime.Now.AddMinutes(snoozeWindow.SnoozeMinutes);
                 _reminderService.AddReminder(_message, dueTime);
                 Close();
@@ -44,6 +49,7 @@ namespace ReminderApp
 
         private void Dismiss_Click(object sender, RoutedEventArgs e)
         {
+            _reminderService.RemoveReminder(_reminderId);
             Close();
         }
     }

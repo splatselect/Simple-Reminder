@@ -10,38 +10,19 @@
     <Grid Margin="25">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
-                   Text="What do you want to be reminded about?"
-                   FontSize="14"
-                   FontWeight="SemiBold"
-                   Margin="0,0,0,10"/>
-
-        <TextBox Grid.Row="1"
-                 x:Name="MessageTextBox"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 Padding="8"
-                 FontSize="14"
-                 MinHeight="80"
-                 Background="White"
-                 BorderBrush="#CCCCCC"
-                 BorderThickness="2"
-                 Margin="0,0,0,20"/>
-
-        <TextBlock Grid.Row="2"
                    Text="Set Timer (minutes)"
                    FontSize="14"
                    FontWeight="SemiBold"
                    Margin="0,0,0,10"/>
 
-        <StackPanel Grid.Row="3" Orientation="Vertical" Margin="0,0,0,20">
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
             <Slider x:Name="MinutesSlider"
                    Minimum="1"
                    Maximum="120"
@@ -50,6 +31,7 @@
                    IsSnapToTickEnabled="True"
                    TickPlacement="BottomRight"
                    ValueChanged="MinutesSlider_ValueChanged"
+                   PreviewMouseUp="MinutesSlider_MouseUp"
                    Margin="0,0,0,10"/>
 
             <TextBlock x:Name="TimeDisplay"
@@ -66,6 +48,25 @@
                       HorizontalAlignment="Center"
                       Foreground="#7F8C8D"/>
         </StackPanel>
+
+        <TextBlock Grid.Row="2"
+                   Text="What do you want to be reminded about?"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   Margin="0,0,0,10"/>
+
+        <TextBox Grid.Row="3"
+                 x:Name="MessageTextBox"
+                 TextWrapping="Wrap"
+                 VerticalScrollBarVisibility="Auto"
+                 Padding="8"
+                 FontSize="14"
+                 MinHeight="80"
+                 Background="White"
+                 BorderBrush="#CCCCCC"
+                 BorderThickness="2"
+                 Margin="0,0,0,20"
+                 KeyDown="MessageTextBox_KeyDown"/>
 
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Start Timer"

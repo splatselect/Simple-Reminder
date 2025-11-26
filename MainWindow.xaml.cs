@@ -183,7 +183,7 @@ namespace ReminderApp
 
         private void OnReminderDue(object? sender, Models.Reminder reminder)
         {
-            var reminderWindow = new ReminderWindow(reminder.Message, _reminderService);
+            var reminderWindow = new ReminderWindow(reminder.Message, _reminderService, reminder.Id);
             reminderWindow.Show();
         }
 
