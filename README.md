@@ -42,23 +42,9 @@ A lightweight Windows reminder application built with C# and WPF.
 
 ## Quick Start
 
-**For Users**: Simply run `Simple Reminder.exe` from the `publish` folder - no installation needed!
+**For Users**: Simply run `Simple Reminder.exe` from the releases - no installation needed!
 
-**For Developers**:
-1. Build the project:
-   ```
-   dotnet build
-   ```
 
-2. Create single-file executable:
-   ```
-   dotnet publish -c Release -o publish
-   ```
-
-3. Run from:
-   ```
-   publish\Simple Reminder.exe
-   ```
 
 ## Usage
 
@@ -99,6 +85,24 @@ A lightweight Windows reminder application built with C# and WPF.
    - Choose modifier keys (Win, Ctrl, Alt, Shift) and a letter
    - Click "Test Hotkey" to ensure it's not in use before saving
 
+
+**For Developers**:
+1. Build the project:
+   ```
+   dotnet build
+   ```
+
+2. Create single-file executable:
+   ```
+   dotnet publish -c Release -o publish
+   ```
+
+3. Run from:
+   ```
+   publish\Simple Reminder.exe
+   ```
+
+   
 ## Requirements
 
 - Windows 10/11
