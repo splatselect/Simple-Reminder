@@ -98,3 +98,4 @@ ReminderApp/
 - Only one instance of the app can run at a time (enforced by Mutex)
 - The icon is embedded as a resource in the single-file executable
 - All toast notifications auto-dismiss after 2 seconds
+- Completely vibe coded. Don't @ me
