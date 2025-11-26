@@ -43,9 +43,20 @@ namespace ReminderApp
         {
             var hotkeyString = _settings.GetHotkeyDisplayString();
 
+            // Load custom icon if it exists, otherwise use default
+            System.Drawing.Icon trayIcon;
+            try
+            {
+                trayIcon = new System.Drawing.Icon("icon.ico");
+            }
+            catch
+            {
+                trayIcon = SystemIcons.Information;
+            }
+
             _notifyIcon = new NotifyIcon
             {
-                Icon = SystemIcons.Information,
+                Icon = trayIcon,
                 Visible = true,
                 Text = $"Simple Reminders - {hotkeyString} to create reminder"
             };
