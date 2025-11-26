@@ -99,8 +99,8 @@ ReminderApp/
 ## Notes
 
 - The app checks for due reminders every 10 seconds
-- Reminders are stored in memory (not persisted between sessions)
-- Settings are saved to `%APPDATA%\SimpleReminders\settings.json`
+- Reminders are saved to `%APPDATA%\SimpleReminders\settings.json` and persist between sessions
+- Settings (hotkey preferences) are also saved to the same settings file
 - Only one instance of the app can run at a time (enforced by Mutex)
 - The icon is embedded as a resource in the single-file executable
 - All toast notifications auto-dismiss after 2 seconds

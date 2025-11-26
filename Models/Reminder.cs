@@ -10,6 +10,16 @@ namespace ReminderApp.Models
         public bool IsCompleted { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        // Parameterless constructor for JSON serialization
+        public Reminder()
+        {
+            Id = Guid.NewGuid();
+            Message = string.Empty;
+            DueTime = DateTime.Now;
+            IsCompleted = false;
+            CreatedAt = DateTime.Now;
+        }
+
         public Reminder(string message, DateTime dueTime)
         {
             Id = Guid.NewGuid();

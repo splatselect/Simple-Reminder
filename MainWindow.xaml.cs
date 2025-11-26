@@ -22,7 +22,7 @@ namespace ReminderApp
             InitializeComponent();
 
             _settings = AppSettings.Load();
-            _reminderService = new ReminderService();
+            _reminderService = new ReminderService(_settings);
             _reminderService.ReminderDue += OnReminderDue;
 
             InitializeSystemTray();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Windows.Input;
@@ -12,6 +13,7 @@ namespace ReminderApp.Models
         public bool UseCtrlKey { get; set; } = false;
         public bool UseAltKey { get; set; } = false;
         public string HotKey { get; set; } = "L";
+        public List<Reminder> SavedReminders { get; set; } = new List<Reminder>();
 
         private static string SettingsPath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),

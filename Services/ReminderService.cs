@@ -10,11 +10,20 @@ namespace ReminderApp.Services
     {
         private readonly List<Reminder> _reminders = new List<Reminder>();
         private readonly DispatcherTimer _timer;
+        private readonly AppSettings _settings;
 
         public event EventHandler<Reminder>? ReminderDue;
 
-        public ReminderService()
+        public ReminderService(AppSettings settings)
         {
+            _settings = settings;
+
+            // Load saved reminders from settings
+            if (_settings.SavedReminders != null)
+            {
+                _reminders.AddRange(_settings.SavedReminders.Where(r => !r.IsCompleted));
+            }
+
             _timer = new DispatcherTimer
             {
                 Interval = TimeSpan.FromSeconds(10) // Check every 10 seconds
@@ -27,6 +36,13 @@ namespace ReminderApp.Services
         {
             var reminder = new Reminder(message, dueTime);
             _reminders.Add(reminder);
+            SaveReminders();
+        }
+
+        private void SaveReminders()
+        {
+            _settings.SavedReminders = _reminders.Where(r => !r.IsCompleted).ToList();
+            _settings.Save();
         }
 
         private void CheckReminders(object? sender, EventArgs e)
@@ -51,6 +67,7 @@ namespace ReminderApp.Services
         public void RemoveReminder(Guid id)
         {
             _reminders.RemoveAll(r => r.Id == id);
+            SaveReminders();
         }
     }
 }
