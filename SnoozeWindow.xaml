@@ -24,12 +24,13 @@
         <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,25">
             <Slider x:Name="MinutesSlider"
                    Minimum="1"
-                   Maximum="60"
+                   Maximum="120"
                    Value="5"
                    TickFrequency="1"
                    IsSnapToTickEnabled="True"
                    TickPlacement="BottomRight"
                    ValueChanged="MinutesSlider_ValueChanged"
+                   PreviewMouseUp="MinutesSlider_MouseUp"
                    Margin="0,0,0,10"/>
 
             <TextBlock x:Name="TimeDisplay"
@@ -37,7 +38,14 @@
                       FontSize="28"
                       FontWeight="Bold"
                       HorizontalAlignment="Center"
-                      Foreground="#3498DB"/>
+                      Foreground="#3498DB"
+                      Margin="0,0,0,5"/>
+
+            <TextBlock x:Name="ReminderTimeDisplay"
+                      Text=""
+                      FontSize="12"
+                      HorizontalAlignment="Center"
+                      Foreground="#7F8C8D"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
