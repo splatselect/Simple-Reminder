@@ -35,12 +35,16 @@
                        Padding="40"
                        MaxWidth="800"
                        Margin="0,0,0,40">
-                    <TextBlock x:Name="MessageTextBlock"
+                    <TextBox x:Name="MessageTextBlock"
                               FontSize="32"
                               TextWrapping="Wrap"
                               TextAlignment="Center"
                               Foreground="#34495E"
-                              LineHeight="45"/>
+                              IsReadOnly="True"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              Cursor="Arrow"
+                              IsReadOnlyCaretVisible="False"/>
                 </Border>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
