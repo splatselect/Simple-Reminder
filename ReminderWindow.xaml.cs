@@ -41,7 +41,17 @@ namespace ReminderApp
             {
                 // Remove the old reminder and add a new one
                 _reminderService.RemoveReminder(_reminderId);
-                var dueTime = DateTime.Now.AddMinutes(snoozeWindow.SnoozeMinutes);
+
+                DateTime dueTime;
+                if (snoozeWindow.SnoozeDateTime.HasValue)
+                {
+                    dueTime = snoozeWindow.SnoozeDateTime.Value;
+                }
+                else
+                {
+                    dueTime = DateTime.Now.AddMinutes(snoozeWindow.SnoozeMinutes);
+                }
+
                 _reminderService.AddReminder(_message, dueTime);
                 Close();
             }

@@ -46,13 +46,25 @@ namespace ReminderApp
                     _reminderService.RemoveReminder(reminder.Id);
 
                     // Add a new one with extended time
-                    var newDueTime = DateTime.Now.AddMinutes(snoozeWindow.SnoozeMinutes);
+                    DateTime newDueTime;
+                    if (snoozeWindow.SnoozeDateTime.HasValue)
+                    {
+                        newDueTime = snoozeWindow.SnoozeDateTime.Value;
+                    }
+                    else
+                    {
+                        newDueTime = DateTime.Now.AddMinutes(snoozeWindow.SnoozeMinutes);
+                    }
+
                     _reminderService.AddReminder(reminder.Message, newDueTime);
 
                     // Show notification
+                    var timeString = newDueTime.Date == DateTime.Now.Date
+                        ? $"{newDueTime:h:mm tt}"
+                        : $"{newDueTime:MMM d} at {newDueTime:h:mm tt}";
                     var toast = new ToastNotification(
                         "Reminder Extended",
-                        $"New time: {newDueTime:h:mm tt}",
+                        $"New time: {timeString}",
                         2);
                     toast.Show();
 

@@ -7,12 +7,37 @@ namespace ReminderApp
     public partial class SnoozeWindow : Window
     {
         public int SnoozeMinutes { get; private set; }
+        public DateTime? SnoozeDateTime { get; private set; }
         public bool WasSnoozed { get; private set; }
+        private DateTime? _customDateTime;
 
         public SnoozeWindow()
         {
             InitializeComponent();
+            InitializeCalendarPickers();
             UpdateTimeDisplay();
+        }
+
+        private void InitializeCalendarPickers()
+        {
+            // Populate hours (1-12)
+            for (int i = 1; i <= 12; i++)
+            {
+                HourPicker.Items.Add(i);
+            }
+
+            // Populate minutes (00-59)
+            for (int i = 0; i < 60; i++)
+            {
+                MinutePicker.Items.Add(i.ToString("00"));
+            }
+
+            // Set defaults to current time
+            var now = DateTime.Now;
+            HourPicker.SelectedItem = now.Hour % 12 == 0 ? 12 : now.Hour % 12;
+            MinutePicker.SelectedItem = now.Minute.ToString("00");
+            AmPmPicker.SelectedIndex = now.Hour >= 12 ? 1 : 0;
+            DatePicker.SelectedDate = DateTime.Today;
         }
 
         private void MinutesSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -26,12 +51,75 @@ namespace ReminderApp
             if (MinutesSlider.Value >= MinutesSlider.Maximum - 1)
             {
                 MinutesSlider.Maximum += 300; // Add 5 more hours
+
+                // Show calendar button when slider extends
+                if (CalendarButton.Visibility == Visibility.Collapsed)
+                {
+                    CalendarButton.Visibility = Visibility.Visible;
+                }
             }
+        }
+
+        private void CalendarButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Toggle calendar panel visibility
+            if (CalendarPanel.Visibility == Visibility.Visible)
+            {
+                CalendarPanel.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                CalendarPanel.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void SetDateTime_Click(object sender, RoutedEventArgs e)
+        {
+            if (DatePicker.SelectedDate == null || HourPicker.SelectedItem == null ||
+                MinutePicker.SelectedItem == null || AmPmPicker.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a complete date and time.", "Incomplete Selection",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var date = DatePicker.SelectedDate.Value;
+            var hour = (int)HourPicker.SelectedItem;
+            var minute = int.Parse(MinutePicker.SelectedItem!.ToString()!);
+            var isPM = (AmPmPicker.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString() == "PM";
+
+            // Convert to 24-hour format
+            if (isPM && hour != 12) hour += 12;
+            if (!isPM && hour == 12) hour = 0;
+
+            _customDateTime = new DateTime(date.Year, date.Month, date.Day, hour, minute, 0);
+
+            if (_customDateTime <= DateTime.Now)
+            {
+                MessageBox.Show("Please select a future date and time.", "Invalid Time",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                _customDateTime = null;
+                return;
+            }
+
+            // Hide calendar panel and update display
+            CalendarPanel.Visibility = Visibility.Collapsed;
+
+            // Update the display to show selected date/time
+            var timeString = _customDateTime.Value.Date == DateTime.Now.Date
+                ? $"Today at {_customDateTime.Value:h:mm tt}"
+                : $"{_customDateTime.Value:MMM d} at {_customDateTime.Value:h:mm tt}";
+            ReminderTimeDisplay.Text = $"📅 Selected: {timeString}";
+            TimeDisplay.Text = "Custom Date/Time";
         }
 
         private void UpdateTimeDisplay()
         {
             if (TimeDisplay == null || ReminderTimeDisplay == null)
+                return;
+
+            // Don't update if custom datetime is set
+            if (_customDateTime.HasValue)
                 return;
 
             int minutes = (int)MinutesSlider.Value;
@@ -84,7 +172,40 @@ namespace ReminderApp
 
         private void Snooze_Click(object sender, RoutedEventArgs e)
         {
-            SnoozeMinutes = (int)MinutesSlider.Value;
+            // If calendar has selections but user didn't click "Set Date/Time", auto-commit them
+            if (!_customDateTime.HasValue &&
+                DatePicker.SelectedDate != null &&
+                HourPicker.SelectedItem != null &&
+                MinutePicker.SelectedItem != null &&
+                AmPmPicker.SelectedItem != null)
+            {
+                var date = DatePicker.SelectedDate.Value;
+                var hour = (int)HourPicker.SelectedItem;
+                var minute = int.Parse(MinutePicker.SelectedItem!.ToString()!);
+                var isPM = (AmPmPicker.SelectedItem as System.Windows.Controls.ComboBoxItem)?.Content.ToString() == "PM";
+
+                // Convert to 24-hour format
+                if (isPM && hour != 12) hour += 12;
+                if (!isPM && hour == 12) hour = 0;
+
+                var selectedDateTime = new DateTime(date.Year, date.Month, date.Day, hour, minute, 0);
+
+                if (selectedDateTime > DateTime.Now)
+                {
+                    _customDateTime = selectedDateTime;
+                }
+            }
+
+            if (_customDateTime.HasValue)
+            {
+                SnoozeDateTime = _customDateTime.Value;
+                SnoozeMinutes = 0; // Not used when DateTime is set
+            }
+            else
+            {
+                SnoozeMinutes = (int)MinutesSlider.Value;
+                SnoozeDateTime = null;
+            }
             WasSnoozed = true;
             Close();
         }
