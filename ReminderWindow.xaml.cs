@@ -32,6 +32,21 @@ namespace ReminderApp
             System.Media.SystemSounds.Exclamation.Play();
         }
 
+        private void QuickSnooze_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is System.Windows.Controls.Button button && button.Tag != null)
+            {
+                int minutes = int.Parse(button.Tag.ToString());
+
+                // Remove the old reminder and add a new one
+                _reminderService.RemoveReminder(_reminderId);
+
+                DateTime dueTime = DateTime.Now.AddMinutes(minutes);
+                _reminderService.AddReminder(_message, dueTime);
+                Close();
+            }
+        }
+
         private void Snooze_Click(object sender, RoutedEventArgs e)
         {
             var snoozeWindow = new SnoozeWindow();

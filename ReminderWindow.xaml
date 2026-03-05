@@ -47,15 +47,23 @@
                               IsReadOnlyCaretVisible="False"/>
                 </Border>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Snooze"
-                           FontSize="24"
-                           Padding="40,15"
-                           Margin="0,0,20,0"
+                <TextBlock Text="Quick Snooze:"
+                          FontSize="18"
+                          FontWeight="SemiBold"
+                          Foreground="#7F8C8D"
+                          HorizontalAlignment="Center"
+                          Margin="0,0,0,15"/>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <Button Content="10 min"
+                           FontSize="16"
+                           Padding="20,10"
+                           Margin="5"
                            Background="#F39C12"
                            Foreground="White"
                            BorderThickness="0"
-                           Click="Snooze_Click"
+                           Click="QuickSnooze_Click"
+                           Tag="10"
                            Cursor="Hand">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -63,6 +71,167 @@
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Background" Value="#E67E22"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="5"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="15 min"
+                           FontSize="16"
+                           Padding="20,10"
+                           Margin="5"
+                           Background="#F39C12"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Click="QuickSnooze_Click"
+                           Tag="15"
+                           Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#F39C12"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E67E22"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="5"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="30 min"
+                           FontSize="16"
+                           Padding="20,10"
+                           Margin="5"
+                           Background="#F39C12"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Click="QuickSnooze_Click"
+                           Tag="30"
+                           Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#F39C12"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E67E22"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="5"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="60 min"
+                           FontSize="16"
+                           Padding="20,10"
+                           Margin="5"
+                           Background="#F39C12"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Click="QuickSnooze_Click"
+                           Tag="60"
+                           Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#F39C12"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E67E22"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="5"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+
+                    <Button Content="120 min"
+                           FontSize="16"
+                           Padding="20,10"
+                           Margin="5"
+                           Background="#F39C12"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Click="QuickSnooze_Click"
+                           Tag="120"
+                           Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#F39C12"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E67E22"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                       CornerRadius="5"
+                                       Padding="{TemplateBinding Padding}">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Content="Custom..."
+                           FontSize="24"
+                           Padding="40,15"
+                           Margin="0,0,20,0"
+                           Background="#9B59B6"
+                           Foreground="White"
+                           BorderThickness="0"
+                           Click="Snooze_Click"
+                           Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#9B59B6"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#8E44AD"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
