@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using ReminderApp.Models;
 using ReminderApp.Services;
 
@@ -15,7 +16,23 @@ namespace ReminderApp
         {
             InitializeComponent();
             _reminderService = reminderService;
+
+            Loaded += OnLoaded;
+            Deactivated += (s, e) => Close();
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            PositionOnRightSide();
             LoadReminders();
+        }
+
+        private void PositionOnRightSide()
+        {
+            var workArea = SystemParameters.WorkArea;
+            this.Height = workArea.Height;
+            this.Top = workArea.Top;
+            this.Left = workArea.Right - this.Width;
         }
 
         private void LoadReminders()
@@ -26,11 +43,21 @@ namespace ReminderApp
 
             RemindersItemsControl.ItemsSource = activeReminders;
 
-            // Update count
             int count = activeReminders.Count;
-            CountTextBlock.Text = count == 0
-                ? "No active reminders"
-                : $"{count} active reminder{(count != 1 ? "s" : "")}";
+
+            if (count == 0)
+            {
+                CountTextBlock.Text = "No active reminders";
+                EmptyState.Visibility = Visibility.Visible;
+                CountBadge.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                CountTextBlock.Text = $"{count} reminder{(count != 1 ? "s" : "")}";
+                EmptyState.Visibility = Visibility.Collapsed;
+                CountBadge.Visibility = Visibility.Visible;
+                CountBadgeText.Text = count.ToString();
+            }
         }
 
         private void Extend_Click(object sender, RoutedEventArgs e)
@@ -42,10 +69,8 @@ namespace ReminderApp
 
                 if (snoozeWindow.WasSnoozed)
                 {
-                    // Remove the old reminder
                     _reminderService.RemoveReminder(reminder.Id);
 
-                    // Add a new one with extended time
                     DateTime newDueTime;
                     if (snoozeWindow.SnoozeDateTime.HasValue)
                     {
@@ -58,14 +83,10 @@ namespace ReminderApp
 
                     _reminderService.AddReminder(reminder.Message, newDueTime);
 
-                    // Show notification
                     var timeString = newDueTime.Date == DateTime.Now.Date
                         ? $"{newDueTime:h:mm tt}"
                         : $"{newDueTime:MMM d} at {newDueTime:h:mm tt}";
-                    var toast = new ToastNotification(
-                        "Reminder Extended",
-                        $"New time: {timeString}",
-                        2);
+                    var toast = new ToastNotification("Reminder Extended", $"New time: {timeString}", 2);
                     toast.Show();
 
                     LoadReminders();
@@ -87,10 +108,7 @@ namespace ReminderApp
                 {
                     _reminderService.RemoveReminder(reminder.Id);
 
-                    var toast = new ToastNotification(
-                        "Reminder Dismissed",
-                        "Reminder has been removed",
-                        2);
+                    var toast = new ToastNotification("Reminder Dismissed", "Reminder has been removed", 2);
                     toast.Show();
 
                     LoadReminders();
@@ -107,7 +125,7 @@ namespace ReminderApp
         {
             var quickNoteWindow = new QuickNoteWindow(_reminderService);
             quickNoteWindow.ShowDialog();
-            LoadReminders(); // Refresh the list after creating a new reminder
+            LoadReminders();
         }
 
         private void Settings_Click(object sender, RoutedEventArgs e)
@@ -120,6 +138,14 @@ namespace ReminderApp
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Close();
+            }
         }
     }
 }

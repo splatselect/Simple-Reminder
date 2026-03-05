@@ -13,7 +13,7 @@ namespace ReminderApp.Helpers
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        private const int HOTKEY_ID = 9000;
+        private readonly int _hotkeyId;
 
         // Modifiers
         private const uint MOD_ALT = 0x0001;
@@ -25,6 +25,11 @@ namespace ReminderApp.Helpers
         private HwndSource? _source;
         public event EventHandler? HotkeyPressed;
 
+        public GlobalHotkey(int hotkeyId = 9000)
+        {
+            _hotkeyId = hotkeyId;
+        }
+
         public bool Register(IntPtr windowHandle, uint modifiers, Key key)
         {
             _windowHandle = windowHandle;
@@ -35,7 +40,7 @@ namespace ReminderApp.Helpers
                 _source.AddHook(HwndHook);
             }
 
-            return RegisterHotKey(_windowHandle, HOTKEY_ID, modifiers, (uint)KeyInterop.VirtualKeyFromKey(key));
+            return RegisterHotKey(_windowHandle, _hotkeyId, modifiers, (uint)KeyInterop.VirtualKeyFromKey(key));
         }
 
         // Legacy method for backwards compatibility
@@ -48,7 +53,7 @@ namespace ReminderApp.Helpers
         {
             const int WM_HOTKEY = 0x0312;
 
-            if (msg == WM_HOTKEY && wParam.ToInt32() == HOTKEY_ID)
+            if (msg == WM_HOTKEY && wParam.ToInt32() == _hotkeyId)
             {
                 HotkeyPressed?.Invoke(this, EventArgs.Empty);
                 handled = true;
@@ -65,7 +70,7 @@ namespace ReminderApp.Helpers
                 _source = null;
             }
 
-            UnregisterHotKey(_windowHandle, HOTKEY_ID);
+            UnregisterHotKey(_windowHandle, _hotkeyId);
         }
     }
 }

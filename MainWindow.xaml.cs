@@ -14,6 +14,8 @@ namespace ReminderApp
     {
         private NotifyIcon? _notifyIcon;
         private GlobalHotkey? _globalHotkey;
+        private GlobalHotkey? _activeRemindersHotkey;
+        private ActiveRemindersWindow? _activeRemindersWindow;
         private readonly ReminderService _reminderService;
         private readonly AppSettings _settings;
 
@@ -92,17 +94,16 @@ namespace ReminderApp
 
         private void RegisterHotkey()
         {
-            // Clean up existing hotkey if any
+            // Clean up existing hotkeys if any
             _globalHotkey?.Dispose();
+            _activeRemindersHotkey?.Dispose();
 
-            // Register global hotkey
             var helper = new WindowInteropHelper(this);
-            _globalHotkey = new GlobalHotkey();
 
+            // Register quick note hotkey (ID 9000)
+            _globalHotkey = new GlobalHotkey(9000);
             var modifiers = GetModifiersFromSettings();
             var key = _settings.GetKey();
-
-            // Debug: Show what we're trying to register
             var hotkeyString = _settings.GetHotkeyDisplayString();
 
             if (_globalHotkey.Register(helper.Handle, modifiers, key))
@@ -124,6 +125,16 @@ namespace ReminderApp
                     ShowSettingsWindow();
                 }
             }
+
+            // Register active reminders hotkey (ID 9001)
+            _activeRemindersHotkey = new GlobalHotkey(9001);
+            var modifiers2 = GetModifiers2FromSettings();
+            var key2 = _settings.GetKey2();
+
+            if (_activeRemindersHotkey.Register(helper.Handle, modifiers2, key2))
+            {
+                _activeRemindersHotkey.HotkeyPressed += (s, e) => ToggleActiveRemindersWindow();
+            }
         }
 
         private uint GetModifiersFromSettings()
@@ -136,6 +147,16 @@ namespace ReminderApp
             return modifiers;
         }
 
+        private uint GetModifiers2FromSettings()
+        {
+            uint modifiers = 0;
+            if (_settings.UseWinKey2) modifiers |= 0x0008;
+            if (_settings.UseCtrlKey2) modifiers |= 0x0002;
+            if (_settings.UseAltKey2) modifiers |= 0x0001;
+            if (_settings.UseShiftKey2) modifiers |= 0x0004;
+            return modifiers;
+        }
+
         private void ShowQuickNoteWindow()
         {
             var quickNoteWindow = new QuickNoteWindow(_reminderService);
@@ -145,9 +166,29 @@ namespace ReminderApp
 
         private void ShowActiveRemindersWindow()
         {
-            var activeRemindersWindow = new ActiveRemindersWindow(_reminderService);
-            activeRemindersWindow.Show();
-            activeRemindersWindow.Activate();
+            if (_activeRemindersWindow != null && _activeRemindersWindow.IsLoaded)
+            {
+                _activeRemindersWindow.Activate();
+                return;
+            }
+
+            _activeRemindersWindow = new ActiveRemindersWindow(_reminderService);
+            _activeRemindersWindow.Closed += (s, e) => _activeRemindersWindow = null;
+            _activeRemindersWindow.Show();
+            _activeRemindersWindow.Activate();
+        }
+
+        private void ToggleActiveRemindersWindow()
+        {
+            if (_activeRemindersWindow != null && _activeRemindersWindow.IsLoaded)
+            {
+                _activeRemindersWindow.Close();
+                _activeRemindersWindow = null;
+            }
+            else
+            {
+                ShowActiveRemindersWindow();
+            }
         }
 
         private void ShowSettingsWindow()
@@ -190,6 +231,7 @@ namespace ReminderApp
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             _globalHotkey?.Dispose();
+            _activeRemindersHotkey?.Dispose();
 
             if (_notifyIcon != null)
             {
