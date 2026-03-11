@@ -11,6 +11,7 @@ namespace ReminderApp
     public partial class ActiveRemindersWindow : Window
     {
         private readonly ReminderService _reminderService;
+        private bool _closing = false;
 
         public ActiveRemindersWindow(ReminderService reminderService)
         {
@@ -18,7 +19,8 @@ namespace ReminderApp
             _reminderService = reminderService;
 
             Loaded += OnLoaded;
-            Deactivated += (s, e) => Close();
+            Closing += (s, e) => _closing = true;
+            Deactivated += (s, e) => { if (!_closing) Close(); };
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

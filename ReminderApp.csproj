@@ -22,4 +22,9 @@
     <EmbeddedResource Include="icon.ico" />
   </ItemGroup>
 
+  <Target Name="SignOutput" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="signtool sign /f &quot;$(SigningCertPath)&quot; /p &quot;$(SigningCertPassword)&quot; /fd SHA256 /tr http://timestamp.certum.pl /td SHA256 &quot;$(PublishDir)Simple Reminder.exe&quot;"
+          Condition="'$(SigningCertPath)' != ''" />
+  </Target>
+
 </Project>
